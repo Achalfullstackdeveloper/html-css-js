@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML & CSS Projects - Portfolio</title>
+    <link rel="icon" type="image/x-icon" href="./images/iconindex.jpg">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Custom Properties */
+        :root {
+            --primary-color: #00f7ff;
+            --primary-dark: #00d4db;
+            --secondary-color: #e89911;
+            --background-dark: #000000;
+            --background-card: rgba(255, 255, 255, 0.95);
+            --background-card-hover: rgba(255, 255, 255, 1);
+            --text-primary: #ffffff;
+            --text-dark: #333333;
+            --shadow-light: rgba(0, 247, 255, 0.3);
+            --shadow-medium: rgba(0, 247, 255, 0.5);
+            --shadow-card: rgba(0, 0, 0, 0.1);
+            --border-radius: 12px;
+            --border-radius-large: 16px;
+            --transition-fast: 0.2s ease;
+            --transition-medium: 0.3s ease;
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
+        }
+
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, var(--background-dark) 0%, #1a1a1a 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: var(--spacing-sm);
+        }
+
+        /* Header Styles */
+        .header {
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+            padding: var(--spacing-md) 0;
+        }
+
+        .main-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: var(--spacing-md);
+            background: linear-gradient(45deg, var(--primary-color), #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px var(--shadow-light);
+        }
+
+        /* Back Button */
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all var(--transition-medium);
+            box-shadow: 
+                0 0 20px var(--shadow-light),
+                inset 0 0 20px rgba(0, 247, 255, 0.1);
+            cursor: pointer;
+        }
+
+        .back-button:hover,
+        .back-button:focus {
+            background: var(--primary-color);
+            color: var(--background-dark);
+            transform: translateY(-2px);
+            box-shadow: 
+                0 8px 25px var(--shadow-medium),
+                0 0 40px var(--shadow-light);
+            outline: none;
+        }
+
+        .back-button:active {
+            transform: translateY(0);
+        }
+
+        /* Container and Grid */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--spacing-md);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+
+        /* Project Cards */
+        .project-card {
+            background: var(--background-card);
+            border-radius: var(--border-radius-large);
+            padding: var(--spacing-md);
+            text-align: center;
+            box-shadow: 
+                0 8px 32px var(--shadow-card),
+                0 0 0 1px rgba(255, 255, 255, 0.1);
+            transition: all var(--transition-medium);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transform: scaleX(0);
+            transition: transform var(--transition-medium);
+        }
+
+        .project-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.15),
+                0 0 0 1px rgba(0, 247, 255, 0.2);
+            background: var(--background-card-hover);
+        }
+
+        .project-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .project-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+            color: var(--text-dark);
+            transition: color var(--transition-fast);
+        }
+
+        .project-card:hover .project-title {
+            color: var(--secondary-color);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: var(--border-radius);
+            transition: transform var(--transition-medium);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-card:hover .project-image {
+            transform: scale(1.05);
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 1024px) {
+            .projects-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: var(--spacing-sm);
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            body {
+                padding: var(--spacing-xs);
+            }
+
+            .container {
+                padding: var(--spacing-sm);
+            }
+
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: var(--spacing-sm);
+            }
+
+            .project-card {
+                padding: var(--spacing-sm);
+            }
+
+            .project-title {
+                font-size: 1.1rem;
+            }
+
+            .project-image {
+                height: 150px;
+            }
+
+            .back-button {
+                padding: var(--spacing-xs) var(--spacing-sm);
+                font-size: 0.9rem;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-sm);
+            }
+
+            .project-image {
+                height: 180px;
+            }
+
+            .main-title {
+                margin-bottom: var(--spacing-sm);
+            }
+        }
+
+        @media screen and (max-width: 360px) {
+            .project-card {
+                padding: var(--spacing-xs) var(--spacing-sm);
+            }
+
+            .project-title {
+                font-size: 1rem;
+                margin-bottom: var(--spacing-sm);
+            }
+
+            .project-image {
+                height: 160px;
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Focus states for accessibility */
+        .project-link:focus {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+
+        /* Loading states */
+        .project-image {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .project-card {
+                border: 2px solid var(--text-dark);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="main-title">HTML & CSS Projects</h1>
+            <a href="../index.html" class="back-button" aria-label="Navigate back to home page">
+                <span>←</span>
+                <span>Back to Home</span>
+            </a>
+        </header>
+
+        <main>
+            <div class="projects-grid" id="projectsContainer">
+                <article class="project-card">
+                    <a href="./achalresume.html" class="project-link" aria-label="View Resume project">
+                        <h2 class="project-title">1. Resume</h2>
+                        <img src="https://tse2.mm.bing.net/th?id=OIP.XTzt32LgM_vRWBuZwLzGnAHaHa&pid=Api&P=0&h=180" 
+                             alt="Resume project preview" 
+                             class="project-image"
+                             loading="lazy">
+                    </a>
+                </article>
+
+                <article class="project-card">
+                    <a href="home.html" class="project-link" aria-label="View Form project">
+                        <h2 class="project-title">2. Form</h2>
+                        <img src="https://tse3.mm.bing.net/th?id=OIP.pk2jHX2LHz7npes3kiZ2BgHaHa&pid=Api&P=0&h=180" 
+                             alt="Form project preview" 
+                             class="project-image"
+                             loading="lazy">
+                    </a>
+                </article>
+
+                <article class="project-card">
+                    <a href="calculator.html" class="project-link" aria-label="View Calculator project">
+                        <h2 class="project-title">3. Calculator</h2>
+                        <img src="https://m.media-amazon.com/images/I/615LHE6vGLL._AC_UF350,350_QL80_.jpg" 
+                             alt="Calculator project preview" 
+                             class="project-image"
+                             loading="lazy">
+                    </a>
+                </article>
+
+                <article class="project-card">
+                    <a href="indianflag.html" class="project-link" aria-label="View National Flag project">
+                        <h2 class="project-title">4. National Flag</h2>
+                        <img src="https://miro.medium.com/v2/resize:fit:1024/1*-8yn-JD9ClYaWOAmrpqJeg.png" 
+                             alt="National Flag project preview" 
+                             class="project-image"
+                             loading="lazy">
+                    </a>
+                </article>
+
+                <article class="project-card">
+                    <a href="inlineblock.html" class="project-link" aria-label="View Top 3 Personality project">
+                        <h2 class="project-title">5. Top 3 Personality</h2>
+                        <img src="https://cdn.firstcry.com/education/2022/08/20163815/Essay-On-Freedom-Fighters-10-Lines-Short-and-Long-Essay-For-Children.jpg" 
+                             alt="Top 3 Personality project preview" 
+                             class="project-image"
+                             loading="lazy">
+                    </a>
+                </article>
+
+                <article class="project-card">
+                    <a href="check.html" class="project-link" aria-label="View Check Box project">
+                        <h2 class="project-title">6. Check Box</h2>
+                        <img src="https://t3.ftcdn.net/jpg/06/56/23/48/360_F_656234868_9PvPydkYgoIWRSGHsZe7sKrYu0QZeD0E.jpg" 
+                             alt="Check Box project preview" 
+                             class="project-image"
+                             loading="lazy">
+                    </a>
+                </article>
+
+                <article class="project-card">
+                    <a href="grid.html" class="project-link" aria-label="View Chess project">
+                        <h2 class="project-title">7. Chess</h2>
+                        <img src="https://www.euroschoolindia.com/wp-content/uploads/2023/09/how-to-play-chess.jpg" 
+                             alt="Chess project preview" 
+                             class="project-image"
+                             loading="lazy">
+                    </a>
+                </article>
+
+                <article class="project-card">
+                    <a href="youtube.html" class="project-link" aria-label="View YouTube Page project">
+                        <h2 class="project-title">8. YouTube Page</h2>
+                        <img src="https://imgv3.fotor.com/images/blog-cover-image/best-youtube-shorts-thumbnail-size_2023-09-28-033838_uvcg.png" 
+                             alt="YouTube Page project preview" 
+                             class="project-image"
+                             loading="lazy">
+                    </a>
+                </article>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Enhanced navigation with error handling
+        function navigateBack() {
+            try {
+                // Check if there's a previous page in history
+                if (window.history.length > 1) {
+                    window.history.back();
+                } else {
+                    // Fallback to home page
+                    window.location.href = '../index.html';
+                }
+            } catch (error) {
+                console.error('Navigation error:', error);
+                window.location.href = '../index.html';
+            }
+        }
+
+        // Add click event to back button
+        document.querySelector('.back-button').addEventListener('click', function(e) {
+            e.preventDefault();
+            navigateBack();
+        });
+
+        // Keyboard navigation support
+        document.addEventListener('keydown', function(e) {
+            // Alt + Left Arrow for back navigation
+            if (e.altKey && e.key === 'ArrowLeft') {
+                e.preventDefault();
+                navigateBack();
+            }
+        });
+
+        // Enhanced image loading with error handling
+        document.addEventListener('DOMContentLoaded', function() {
+            const images = document.querySelectorAll('.project-image');
+            
+            images.forEach(img => {
+                img.addEventListener('error', function() {
+                    // Fallback for broken images
+                    this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlIE5vdCBGb3VuZDwvdGV4dD48L3N2Zz4=';
+                    this.alt = 'Image not available';
+                });
+
+                // Add loading effect
+                img.addEventListener('load', function() {
+                    this.style.opacity = '1';
+                });
+            });
+        });
+
+        // Performance optimization: Intersection Observer for lazy loading
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.style.opacity = '0';
+                        img.style.transition = 'opacity 0.3s ease';
+                        observer.unobserve(img);
+                    }
+                });
+            });
+
+            document.querySelectorAll('.project-image').forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+    </script

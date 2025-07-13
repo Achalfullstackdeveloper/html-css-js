@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bank Withdrawal System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f8ff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .withdrawal-container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      width: 300px;
+    }
+    .withdrawal-container h2 {
+      margin-bottom: 20px;
+    }
+    .withdrawal-container input,
+    .withdrawal-container button {
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+      font-size: 16px;
+    }
+    .message {
+      margin-top: 20px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="withdrawal-container">
+    <h2>Bank Withdrawal System</h2>
+    <input type="number" id="withdrawAmount" placeholder="Enter withdrawal amount">
+    <button onclick="Withdraw()">Submit</button>
+    <div class="message" id="message"></div>
+  </div>
+
+  <script>
+    function Withdraw() {
+      const amount = parseInt(document.getElementById("withdrawAmount").value);
+      const balance = 10000;
+      let output = "";
+
+      if (isNaN(amount) || amount <= 0) {
+        output = "Please enter a valid amount.";
+      } else if (amount <= balance) {
+        if (amount % 100 === 0) {
+          output = "Withdrawal Successful.";
+        } else {
+          output = "Amount should be in multiples of 100.";
+        }
+      } else {
+        output = "Insufficient Funds.";
+      }
+
+      document.getElementById("message").innerText = output;
+    }
+  </script>
+</body>
+</html>
